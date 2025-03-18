@@ -8,6 +8,9 @@
 </head>
 <body>
     <div class="card">
+        <!-- Dark Mode Toggle Button -->
+        <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
+
         <div class="search">
             <form id="searchForm">
                 <input type="text" placeholder="Enter city name" spellcheck="false">
@@ -49,6 +52,28 @@
         const searchForm = document.getElementById("searchForm");
         const spinner = document.getElementById("spinner");
         const weatherContainer = document.querySelector(".weather");
+
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        const body = document.body;
+
+        // Check localStorage for dark mode preference
+        if (localStorage.getItem("darkMode") === "enabled") {
+            body.classList.add("dark-mode");
+            darkModeToggle.textContent = "☀️"; // Change button icon to sun
+        }
+
+        // Toggle dark mode
+        darkModeToggle.addEventListener("click", () => {
+            body.classList.toggle("dark-mode");
+            const isDarkMode = body.classList.contains("dark-mode");
+
+            // Update button icon
+            darkModeToggle.textContent = isDarkMode ? "☀️" : "🌙";
+
+            // Save preference to localStorage
+            localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
+        });
 
         async function checkWeather(city) {
             try {
